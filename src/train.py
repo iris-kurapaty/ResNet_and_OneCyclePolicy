@@ -24,7 +24,7 @@ def train(model, device, train_loader, optimizer, epoch,scheduler, criterion):
     y_pred = model(data)
 
     # Calculate loss
-    loss = F.nll_loss(y_pred, target)
+    loss = criterion(y_pred, target)
     train_losses.append(loss)
 
     # Backpropagation
@@ -34,7 +34,6 @@ def train(model, device, train_loader, optimizer, epoch,scheduler, criterion):
     scheduler.step()
     lrs.append(scheduler.get_last_lr()[0])
     # Update pbar-tqdm
-
     pred = y_pred.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
     correct += pred.eq(target.view_as(pred)).sum().item()
     processed += len(data)
